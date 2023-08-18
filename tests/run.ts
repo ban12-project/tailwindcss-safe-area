@@ -1,7 +1,10 @@
 import path from 'path'
+import { fileURLToPath } from 'url'
 import postcss from 'postcss'
 import tailwind, { Config } from 'tailwindcss'
 import containerQueries from '../src'
+
+const __filename = fileURLToPath(import.meta.url)
 
 export let css = String.raw
 export let html = String.raw

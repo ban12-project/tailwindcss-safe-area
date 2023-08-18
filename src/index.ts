@@ -1,6 +1,6 @@
 import plugin from 'tailwindcss/plugin'
 
-export = plugin(
+export default plugin(
   function containerQueries({ matchUtilities, matchVariant, theme }) {
     let values: Record<string, string> = theme('containers') ?? {}
 

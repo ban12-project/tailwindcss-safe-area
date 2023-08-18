@@ -1,5 +1,6 @@
 import { expect } from '@jest/globals'
 import { html, css, run } from './run'
+import '../jest/custom-matchers'
 
 it('container queries', () => {
   let config = {

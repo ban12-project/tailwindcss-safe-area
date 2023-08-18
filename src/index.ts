@@ -1,85 +1,151 @@
 import plugin from 'tailwindcss/plugin'
+import { CSSRuleObject } from 'tailwindcss/types/config'
 
-export default plugin(
-  function containerQueries({ matchUtilities, matchVariant, theme }) {
-    let values: Record<string, string> = theme('containers') ?? {}
-
-    function parseValue(value: string) {
-      let numericValue = value.match(/^(\d+\.\d+|\d+|\.\d+)\D+/)?.[1] ?? null
-      if (numericValue === null) return null
-
-      return parseFloat(value)
-    }
-
-    matchUtilities(
-      {
-        '@container': (value, { modifier }) => {
-          return {
-            'container-type': value,
-            'container-name': modifier,
-          }
-        },
-      },
-      {
-        values: {
-          DEFAULT: 'inline-size',
-          normal: 'normal',
-        },
-        modifiers: 'any',
-      }
-    )
-
-    matchVariant(
-      '@',
-      (value = '', { modifier }) => {
-        let parsed = parseValue(value)
-
-        return parsed !== null ? `@container ${modifier ?? ''} (min-width: ${value})` : []
-      },
-      {
-        values,
-        sort(aVariant, zVariant) {
-          let a = parseFloat(aVariant.value)
-          let z = parseFloat(zVariant.value)
-
-          if (a === null || z === null) return 0
-
-          // Sort values themselves regardless of unit
-          if (a - z !== 0) return a - z
-
-          let aLabel = aVariant.modifier ?? ''
-          let zLabel = zVariant.modifier ?? ''
-
-          // Explicitly move empty labels to the end
-          if (aLabel === '' && zLabel !== '') {
-            return 1
-          } else if (aLabel !== '' && zLabel === '') {
-            return -1
-          }
-
-          // Sort labels alphabetically in the English locale
-          // We are intentionally overriding the locale because we do not want the sort to
-          // be affected by the machine's locale (be it a developer or CI environment)
-          return aLabel.localeCompare(zLabel, 'en', { numeric: true })
-        },
-      }
-    )
-  },
-  {
-    theme: {
-      containers: {
-        xs: '20rem',
-        sm: '24rem',
-        md: '28rem',
-        lg: '32rem',
-        xl: '36rem',
-        '2xl': '42rem',
-        '3xl': '48rem',
-        '4xl': '56rem',
-        '5xl': '64rem',
-        '6xl': '72rem',
-        '7xl': '80rem',
-      },
+export default plugin(function safeArea({ addUtilities, matchUtilities, theme }) {
+  const baseUtilities = {
+    '.top-safe': {
+      top: 'env(safe-area-inset-top)',
+    },
+    '.right-safe': {
+      right: 'env(safe-area-inset-right)',
+    },
+    '.bottom-safe': {
+      bottom: 'env(safe-area-inset-bottom)',
+    },
+    '.left-safe': {
+      left: 'env(safe-area-inset-left)',
+    },
+    '.m-safe': {
+      marginTop: 'env(safe-area-inset-top)',
+      marginRight: 'env(safe-area-inset-right)',
+      marginBottom: 'env(safe-area-inset-bottom)',
+      marginLeft: 'env(safe-area-inset-left)',
+    },
+    '.mx-safe': {
+      marginRight: 'env(safe-area-inset-right)',
+      marginLeft: 'env(safe-area-inset-left)',
+    },
+    '.my-safe': {
+      marginTop: 'env(safe-area-inset-top)',
+      marginBottom: 'env(safe-area-inset-bottom)',
+    },
+    '.mt-safe': {
+      marginTop: 'env(safe-area-inset-top)',
+    },
+    '.mr-safe': {
+      marginRight: 'env(safe-area-inset-right)',
+    },
+    '.mb-safe': {
+      marginBottom: 'env(safe-area-inset-bottom)',
+    },
+    '.ml-safe': {
+      marginLeft: 'env(safe-area-inset-left)',
+    },
+    '.ms-safe-top': {
+      marginInlineStart: 'env(safe-area-inset-top)'
+    },
+    '.ms-safe-right': {
+      marginInlineStart: 'env(safe-area-inset-right)'
+    },
+    '.ms-safe-bottom': {
+      marginInlineStart: 'env(safe-area-inset-bottom)'
+    },
+    '.ms-safe-left': {
+      marginInlineStart: 'env(safe-area-inset-left)'
+    },
+    '.me-safe-top': {
+      marginInlineEnd: 'env(safe-area-inset-top)'
+    },
+    '.me-safe-right': {
+      marginInlineEnd: 'env(safe-area-inset-right)'
+    },
+    '.me-safe-bottom': {
+      marginInlineEnd: 'env(safe-area-inset-bottom)'
+    },
+    '.me-safe-left': {
+      marginInlineEnd: 'env(safe-area-inset-left)'
+    },
+    '.p-safe': {
+      paddingTop: 'env(safe-area-inset-top)',
+      paddingRight: 'env(safe-area-inset-right)',
+      paddingBottom: 'env(safe-area-inset-bottom)',
+      paddingLeft: 'env(safe-area-inset-left)',
+    },
+    '.px-safe': {
+      paddingRight: 'env(safe-area-inset-right)',
+      paddingLeft: 'env(safe-area-inset-left)',
+    },
+    '.py-safe': {
+      paddingTop: 'env(safe-area-inset-top)',
+      paddingBottom: 'env(safe-area-inset-bottom)',
+    },
+    '.pt-safe': {
+      paddingTop: 'env(safe-area-inset-top)',
+    },
+    '.pr-safe': {
+      paddingRight: 'env(safe-area-inset-right)',
+    },
+    '.pb-safe': {
+      paddingBottom: 'env(safe-area-inset-bottom)',
+    },
+    '.pl-safe': {
+      paddingLeft: 'env(safe-area-inset-left)',
+    },
+    '.ps-safe-top': {
+      paddingInlineStart: 'env(safe-area-inset-top)'
+    },
+    '.ps-safe-right': {
+      paddingInlineStart: 'env(safe-area-inset-right)'
+    },
+    '.ps-safe-bottom': {
+      paddingInlineStart: 'env(safe-area-inset-bottom)'
+    },
+    '.ps-safe-left': {
+      paddingInlineStart: 'env(safe-area-inset-left)'
+    },
+    '.pe-safe-top': {
+      paddingInlineEnd: 'env(safe-area-inset-top)'
+    },
+    '.pe-safe-right': {
+      paddingInlineEnd: 'env(safe-area-inset-right)'
+    },
+    '.pe-safe-bottom': {
+      paddingInlineEnd: 'env(safe-area-inset-bottom)'
+    },
+    '.pe-safe-left': {
+      paddingInlineEnd: 'env(safe-area-inset-left)'
     },
   }
-)
+  addUtilities(baseUtilities)
+
+  const genVariants = (
+    selectorHandler: (selector: string) => string,
+    propertyValueHandler: (value: string, propertyValue: string) => string,
+    base = baseUtilities
+  ) => {
+    const genDeclaration = (declaration: Record<string, string>) => (value: string) =>
+      Object.entries(declaration).reduce<CSSRuleObject>((properties, [property, propertyValue]) => {
+        properties[property] = propertyValueHandler(value, propertyValue)
+        return properties
+      }, {})
+
+    return Object.entries(base).reduce<Record<string, (value: string) => CSSRuleObject>>(
+      (values, [selector, declaration]) => {
+        values[selectorHandler(selector.slice(1))] = genDeclaration(declaration)
+        return values
+      },
+      {}
+    )
+  }
+
+  matchUtilities(
+    genVariants(
+      (selector) => `${selector}-max`,
+      (value, propertyValue) => `max(${value}, ${propertyValue})`
+    ),
+    {
+      values: theme('spacing'),
+      supportsNegativeValues: true,
+    }
+  )
+})

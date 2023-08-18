@@ -1,13 +1,13 @@
-# @tailwindcss/container-queries
+# @ban12/tailwindcss-safe-area
 
-A plugin for Tailwind CSS v3.2+ that provides utilities for container queries.
+A plugin for Tailwind CSS v3.2+ that provides utilities for safe area.
 
 ## Installation
 
 Install the plugin from npm:
 
 ```sh
-npm install @tailwindcss/container-queries
+npm install @ban12/tailwindcss-safe-area
 ```
 
 Then add the plugin to your `tailwind.config.js` file:
@@ -19,7 +19,7 @@ module.exports = {
     // ...
   },
   plugins: [
-    require('@tailwindcss/container-queries'),
+    require('@ban12/tailwindcss-safe-area'),
     // ...
   ],
 }
@@ -27,93 +27,58 @@ module.exports = {
 
 ## Usage
 
-Start by marking an element as a container using the `@container` class, and then applying styles based on the size of that container using the container variants like `@md:`, `@lg:`, and `@xl:`:
+Supported css attributes `top` `right` `bottom` `left` `margin` `padding` `margin-inline-start` `padding-inline-start`, pre-setting `<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">`:
 
 ```html
-<div class="@container">
-  <div class="@lg:underline">
-    <!-- This text will be underlined when the container is larger than `32rem` -->
-  </div>
-</div>
+<div class="top-safe mx-safe p-safe"></div>
 ```
 
-By default we provide [container sizes](#configuration) from `@xs` (`20rem`) to `@7xl` (`80rem`).
+```css
+.top-safe {
+  top: env(safe-area-inset-top);
+}
 
-### Named containers
+.mx-safe {
+  margin-right: env(safe-area-inset-right);
+  margin-left: env(safe-area-inset-left);
+}
 
-You can optionally name containers using a `@container/{name}` class, and then include that name in the container variants using classes like `@lg/{name}:underline`:
-
-```html
-<div class="@container/main">
-  <!-- ... -->
-  <div class="@lg/main:underline">
-    <!-- This text will be underlined when the "main" container is larger than `32rem` -->
-  </div>
-</div>
-```
-
-### Arbitrary container sizes
-
-In addition to using one of the [container sizes](#configuration) provided by default, you can also create one-off sizes using any arbitrary value:
-
-```html
-<div class="@container">
-  <div class="@[17.5rem]:underline">
-    <!-- This text will be underlined when the container is larger than `17.5rem` -->
-  </div>
-</div>
-```
-
-### Removing a container
-
-To stop an element from acting as a container, use the `@container-normal` class.
-
-<div class="@container xl:@container-normal">
-  <!-- ... -->
-</div>
-
-### With a prefix
-
-If you have configured Tailwind to use a prefix, make sure to prefix both the `@container` class and any classes where you are using a container query modifier:
-
-```html
-<div class="tw-@container">
-  <!-- ... -->
-  <div class="@lg:tw-underline">
-    <!-- ... -->
-  </div>
-</div>
-```
-
-## Configuration
-
-By default we ship with the following configured values:
-
-| Name   | CSS                                          |
-| ------ | -------------------------------------------- |
-| `@xs`  | `@container (min-width: 20rem /* 320px */)`  |
-| `@sm`  | `@container (min-width: 24rem /* 384px */)`  |
-| `@md`  | `@container (min-width: 28rem /* 448px */)`  |
-| `@lg`  | `@container (min-width: 32rem /* 512px */)`  |
-| `@xl`  | `@container (min-width: 36rem /* 576px */)`  |
-| `@2xl` | `@container (min-width: 42rem /* 672px */)`  |
-| `@3xl` | `@container (min-width: 48rem /* 768px */)`  |
-| `@4xl` | `@container (min-width: 56rem /* 896px */)`  |
-| `@5xl` | `@container (min-width: 64rem /* 1024px */)` |
-| `@6xl` | `@container (min-width: 72rem /* 1152px */)` |
-| `@7xl` | `@container (min-width: 80rem /* 1280px */)` |
-
-You can configure which values are available for this plugin under the `containers` key in your `tailwind.config.js` file:
-
-```js
-// tailwind.config.js
-module.exports = {
-  theme: {
-    extend: {
-      containers: {
-        '2xs': '16rem',
-      },
-    },
-  },
+.p-safe {
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
 }
 ```
+
+### With `max()` and `@supports`
+
+> The `max()` CSS function lets you set the largest (most positive) value from a list of comma-separated expressions as the value of a CSS property value, the @supports CSS at-rule lets you specify CSS declarations that depend on a browser's support for CSS features:
+
+```html
+<div class="top-safe-max-1 supports-[padding:max(0px)]:top-safe-max-1"></div>
+```
+
+```css
+.top-safe-max-1 {
+  top: max(0.25rem, env(safe-area-inset-top));
+}
+@supports (padding: max(0px)) {
+  .supports-\[padding\:max\(0px\)\]\:top-safe-max-1 {
+    top: max(0.25rem, env(safe-area-inset-top));
+  }
+}
+```
+
+## Reference
+
+Class name and generated css attribute:
+
+| Name                                                             | CSS                                             |
+| ---------------------------------------------------------------- | ----------------------------------------------- |
+| `top-safe mt-safe pt-safe [ms \| me \| ps \| pe]-safe-top`       | `safe-area-inset-top`                           |
+| `right-safe mr-safe pr-safe [ms \| me \| ps \| pe]-safe-right`   | `safe-area-inset-right`                         |
+| `bottom-safe mb-safe pb-safe [ms \| me \| ps \| pe]-safe-bottom` | `safe-area-inset-bottom`                        |
+| `left-safe ml-safe pl-safe [ms \| me \| ps \| pe]-safe-left`     | `safe-area-inset-left`                          |
+| `mx px`                                                          | `safe-area-inset-left \| safe-area-inset-right` |
+| `my py`                                                          | `safe-area-inset-top \| safe-area-inset-bottom` |

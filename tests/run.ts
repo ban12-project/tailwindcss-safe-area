@@ -2,7 +2,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import postcss from 'postcss'
 import tailwind, { Config } from 'tailwindcss'
-import containerQueries from '../src'
+import safeArea from '../src'
 
 const __filename = fileURLToPath(import.meta.url)
 
@@ -14,8 +14,8 @@ export function run(input: string, config: Config, plugin = tailwind) {
   let { currentTestName } = expect.getState()
 
   config.plugins ??= []
-  if (!config.plugins.includes(containerQueries)) {
-    config.plugins.push(containerQueries)
+  if (!config.plugins.includes(safeArea)) {
+    config.plugins.push(safeArea)
   }
 
   return postcss(plugin(config)).process(input, {

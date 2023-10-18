@@ -24,6 +24,16 @@ it('safe area', () => {
           <div class="pt-safe pr-safe pb-safe pl-safe"></div>
           <div class="ps-safe-top ps-safe-right ps-safe-bottom ps-safe-left"></div>
           <div class="pe-safe-top pe-safe-right pe-safe-bottom pe-safe-left"></div>
+
+          <div class="scroll-safe-m"></div>
+          <div class="scroll-safe-mx"></div>
+          <div class="scroll-safe-my"></div>
+          <div class="scroll-safe-mt scroll-safe-mr scroll-safe-mb scroll-safe-ml></div>
+
+          <div class="scroll-safe-p"></div>
+          <div class="scroll-safe-px"></div>
+          <div class="scroll-safe-py"></div>
+          <div class="scroll-safe-pt scroll-safe-pr scroll-safe-pb scroll-safe-pl></div>
         `,
       },
     ],
@@ -182,6 +192,60 @@ it('safe area', () => {
       .pe-safe-left {
         padding-inline-end: env(safe-area-inset-left);
       }
+
+      .scroll-safe-m {
+        scroll-margin-top: env(safe-area-inset-top);
+        scroll-margin-right: env(safe-area-inset-right);
+        scroll-margin-bottom: env(safe-area-inset-bottom);
+        scroll-margin-left: env(safe-area-inset-left);
+      }
+      .scroll-safe-mx {
+        scroll-margin-left: env(safe-area-inset-left);
+        scroll-margin-right: env(safe-area-inset-right);
+      }
+      .scroll-safe-my {
+        scroll-margin-top: env(safe-area-inset-top);
+        scroll-margin-bottom: env(safe-area-inset-bottom);
+      }
+      .scroll-safe-mt {
+        scroll-margin-top: env(safe-area-inset-top);
+      }
+      .scroll-safe-mr {
+        scroll-margin-right: env(safe-area-inset-right);
+      }
+      .scroll-safe-mb {
+        scroll-margin-bottom: env(safe-area-inset-bottom);
+      }
+      .scroll-safe-ml {
+        scroll-margin-left: env(safe-area-inset-left);
+      }
+
+      .scroll-safe-p {
+        scroll-padding-top: env(safe-area-inset-top);
+        scroll-padding-right: env(safe-area-inset-right);
+        scroll-padding-bottom: env(safe-area-inset-bottom);
+        scroll-padding-left: env(safe-area-inset-left);
+      }
+      .scroll-safe-px {
+        scroll-padding-left: env(safe-area-inset-left);
+        scroll-padding-right: env(safe-area-inset-right);
+      }
+      .scroll-safe-py {
+        scroll-padding-top: env(safe-area-inset-top);
+        scroll-padding-bottom: env(safe-area-inset-bottom);
+      }
+      .scroll-safe-pt {
+        scroll-padding-top: env(safe-area-inset-top);
+      }
+      .scroll-safe-pr {
+        scroll-padding-right: env(safe-area-inset-right);
+      }
+      .scroll-safe-pb {
+        scroll-padding-bottom: env(safe-area-inset-bottom);
+      }
+      .scroll-safe-pl {
+        scroll-padding-left: env(safe-area-inset-left);
+      }
     `)
   })
 })
@@ -196,6 +260,9 @@ it('should be possible to use variants', () => {
           <div class="top-safe-max-[1px]"></div>
           <div class="top-safe-max-[var(--css-variable)]"></div>
           <div class="supports-[padding:max(0px)]:top-safe-max-1"></div>
+
+          <div class="scroll-safe-m-max-1"></div>
+          <div class="scroll-safe-p-max-1"></div>
         `,
       },
     ],
@@ -216,6 +283,20 @@ it('should be possible to use variants', () => {
 
       .pe-safe-top-max-1 {
         padding-inline-end: max(0.25rem, env(safe-area-inset-top));
+      }
+
+      .scroll-safe-m-max-1 {
+        scroll-margin-top: max(0.25rem, env(safe-area-inset-top));
+        scroll-margin-right: max(0.25rem, env(safe-area-inset-right));
+        scroll-margin-bottom: max(0.25rem, env(safe-area-inset-bottom));
+        scroll-margin-left: max(0.25rem, env(safe-area-inset-left));
+      }
+
+      .scroll-safe-p-max-1 {
+        scroll-padding-top: max(0.25rem, env(safe-area-inset-top));
+        scroll-padding-right: max(0.25rem, env(safe-area-inset-right));
+        scroll-padding-bottom: max(0.25rem, env(safe-area-inset-bottom));
+        scroll-padding-left: max(0.25rem, env(safe-area-inset-left));
       }
 
       .top-safe-max-1 {

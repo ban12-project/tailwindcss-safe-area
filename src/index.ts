@@ -116,69 +116,69 @@ export default plugin(function safeArea({ addUtilities, matchUtilities, theme })
       paddingInlineEnd: 'env(safe-area-inset-left)',
     },
     /* Scroll Margin */
-    '.scroll-safe-m': {
+    '.scroll-m-safe': {
       scrollMarginTop: 'env(safe-area-inset-top)',
       scrollMarginRight: 'env(safe-area-inset-right)',
       scrollMarginBottom: 'env(safe-area-inset-bottom)',
       scrollMarginLeft: 'env(safe-area-inset-left)',
     },
-    '.scroll-safe-mx': {
+    '.scroll-mx-safe': {
       scrollMarginLeft: 'env(safe-area-inset-left)',
       scrollMarginRight: 'env(safe-area-inset-right)',
     },
-    '.scroll-safe-my': {
+    '.scroll-my-safe': {
       scrollMarginTop: 'env(safe-area-inset-top)',
       scrollMarginBottom: 'env(safe-area-inset-bottom)',
     },
-    /* '.scroll-safe-ms': {
+    '.scroll-ms-safe': {
       scrollMarginInlineStart: 'env(safe-area-inset-left)',
     },
-    '.scroll-safe-me': {
+    '.scroll-me-safe': {
       scrollMarginInlineEnd: 'env(safe-area-inset-right)',
-    }, */
-    '.scroll-safe-mt': {
+    },
+    '.scroll-mt-safe': {
       scrollMarginTop: 'env(safe-area-inset-top)',
     },
-    '.scroll-safe-mr': {
+    '.scroll-mr-safe': {
       scrollMarginRight: 'env(safe-area-inset-right)',
     },
-    '.scroll-safe-mb': {
+    '.scroll-mb-safe': {
       scrollMarginBottom: 'env(safe-area-inset-bottom)',
     },
-    '.scroll-safe-ml': {
+    '.scroll-ml-safe': {
       scrollMarginLeft: 'env(safe-area-inset-left)',
     },
     /* Scroll Padding */
-    '.scroll-safe-p': {
+    '.scroll-p-safe': {
       scrollPaddingTop: 'env(safe-area-inset-top)',
       scrollPaddingRight: 'env(safe-area-inset-right)',
       scrollPaddingBottom: 'env(safe-area-inset-bottom)',
       scrollPaddingLeft: 'env(safe-area-inset-left)',
     },
-    '.scroll-safe-px': {
+    '.scroll-px-safe': {
       scrollPaddingLeft: 'env(safe-area-inset-left)',
       scrollPaddingRight: 'env(safe-area-inset-right)',
     },
-    '.scroll-safe-py': {
+    '.scroll-py-safe': {
       scrollPaddingTop: 'env(safe-area-inset-top)',
       scrollPaddingBottom: 'env(safe-area-inset-bottom)',
     },
-    /* '.scroll-safe-ps': {
+    '.scroll-ps-safe': {
       scrollPaddingInlineStart: 'env(safe-area-inset-left)',
     },
-    '.scroll-safe-pe': {
+    '.scroll-pe-safe': {
       scrollPaddingInlineEnd: 'env(safe-area-inset-right)',
-    }, */
-    '.scroll-safe-pt': {
+    },
+    '.scroll-pt-safe': {
       scrollPaddingTop: 'env(safe-area-inset-top)',
     },
-    '.scroll-safe-pr': {
+    '.scroll-pr-safe': {
       scrollPaddingRight: 'env(safe-area-inset-right)',
     },
-    '.scroll-safe-pb': {
+    '.scroll-pb-safe': {
       scrollPaddingBottom: 'env(safe-area-inset-bottom)',
     },
-    '.scroll-safe-pl': {
+    '.scroll-pl-safe': {
       scrollPaddingLeft: 'env(safe-area-inset-left)',
     },
   }

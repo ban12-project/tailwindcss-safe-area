@@ -25,15 +25,15 @@ it('safe area', () => {
           <div class="ps-safe-top ps-safe-right ps-safe-bottom ps-safe-left"></div>
           <div class="pe-safe-top pe-safe-right pe-safe-bottom pe-safe-left"></div>
 
-          <div class="scroll-safe-m"></div>
-          <div class="scroll-safe-mx"></div>
-          <div class="scroll-safe-my"></div>
-          <div class="scroll-safe-mt scroll-safe-mr scroll-safe-mb scroll-safe-ml></div>
+          <div class="scroll-m-safe"></div>
+          <div class="scroll-mx-safe"></div>
+          <div class="scroll-my-safe"></div>
+          <div class="scroll-mt-safe scroll-mr-safe scroll-mb-safe scroll-ml-safe></div>
 
-          <div class="scroll-safe-p"></div>
-          <div class="scroll-safe-px"></div>
-          <div class="scroll-safe-py"></div>
-          <div class="scroll-safe-pt scroll-safe-pr scroll-safe-pb scroll-safe-pl></div>
+          <div class="scroll-p-safe"></div>
+          <div class="scroll-px-safe"></div>
+          <div class="scroll-py-safe"></div>
+          <div class="scroll-pt-safe scroll-pr-safe scroll-pb-safe scroll-pl-safe></div>
         `,
       },
     ],
@@ -193,57 +193,57 @@ it('safe area', () => {
         padding-inline-end: env(safe-area-inset-left);
       }
 
-      .scroll-safe-m {
+      .scroll-m-safe {
         scroll-margin-top: env(safe-area-inset-top);
         scroll-margin-right: env(safe-area-inset-right);
         scroll-margin-bottom: env(safe-area-inset-bottom);
         scroll-margin-left: env(safe-area-inset-left);
       }
-      .scroll-safe-mx {
+      .scroll-mx-safe {
         scroll-margin-left: env(safe-area-inset-left);
         scroll-margin-right: env(safe-area-inset-right);
       }
-      .scroll-safe-my {
+      .scroll-my-safe {
         scroll-margin-top: env(safe-area-inset-top);
         scroll-margin-bottom: env(safe-area-inset-bottom);
       }
-      .scroll-safe-mt {
+      .scroll-mt-safe {
         scroll-margin-top: env(safe-area-inset-top);
       }
-      .scroll-safe-mr {
+      .scroll-mr-safe {
         scroll-margin-right: env(safe-area-inset-right);
       }
-      .scroll-safe-mb {
+      .scroll-mb-safe {
         scroll-margin-bottom: env(safe-area-inset-bottom);
       }
-      .scroll-safe-ml {
+      .scroll-ml-safe {
         scroll-margin-left: env(safe-area-inset-left);
       }
 
-      .scroll-safe-p {
+      .scroll-p-safe {
         scroll-padding-top: env(safe-area-inset-top);
         scroll-padding-right: env(safe-area-inset-right);
         scroll-padding-bottom: env(safe-area-inset-bottom);
         scroll-padding-left: env(safe-area-inset-left);
       }
-      .scroll-safe-px {
+      .scroll-px-safe {
         scroll-padding-left: env(safe-area-inset-left);
         scroll-padding-right: env(safe-area-inset-right);
       }
-      .scroll-safe-py {
+      .scroll-py-safe {
         scroll-padding-top: env(safe-area-inset-top);
         scroll-padding-bottom: env(safe-area-inset-bottom);
       }
-      .scroll-safe-pt {
+      .scroll-pt-safe {
         scroll-padding-top: env(safe-area-inset-top);
       }
-      .scroll-safe-pr {
+      .scroll-pr-safe {
         scroll-padding-right: env(safe-area-inset-right);
       }
-      .scroll-safe-pb {
+      .scroll-pb-safe {
         scroll-padding-bottom: env(safe-area-inset-bottom);
       }
-      .scroll-safe-pl {
+      .scroll-pl-safe {
         scroll-padding-left: env(safe-area-inset-left);
       }
     `)
@@ -261,8 +261,8 @@ it('should be possible to use variants', () => {
           <div class="top-safe-max-[var(--css-variable)]"></div>
           <div class="supports-[padding:max(0px)]:top-safe-max-1"></div>
 
-          <div class="scroll-safe-m-max-1"></div>
-          <div class="scroll-safe-p-max-1"></div>
+          <div class="scroll-m-safe-max-1"></div>
+          <div class="scroll-p-safe-max-1"></div>
         `,
       },
     ],
@@ -285,14 +285,14 @@ it('should be possible to use variants', () => {
         padding-inline-end: max(0.25rem, env(safe-area-inset-top));
       }
 
-      .scroll-safe-m-max-1 {
+      .scroll-m-safe-max-1 {
         scroll-margin-top: max(0.25rem, env(safe-area-inset-top));
         scroll-margin-right: max(0.25rem, env(safe-area-inset-right));
         scroll-margin-bottom: max(0.25rem, env(safe-area-inset-bottom));
         scroll-margin-left: max(0.25rem, env(safe-area-inset-left));
       }
 
-      .scroll-safe-p-max-1 {
+      .scroll-p-safe-max-1 {
         scroll-padding-top: max(0.25rem, env(safe-area-inset-top));
         scroll-padding-right: max(0.25rem, env(safe-area-inset-right));
         scroll-padding-bottom: max(0.25rem, env(safe-area-inset-bottom));

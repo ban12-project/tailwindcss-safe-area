@@ -15,8 +15,7 @@
   },
   "include": [
     "./src/index.ts",
-    "./tests/index.ts",
-    "./jest/**/*.ts"
+    "./tests/index.ts"
   ],
   "exclude": [
     "./tests/index.test.ts"

@@ -21,5 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add new `safe-max` variants.
 
 [unreleased]: https://github.com/ban12-project/tailwindcss-safe-area/compare/v0.1.1...HEAD
+[0.2.4]: https://github.com/ban12-project/tailwindcss-safe-area/compare/v0.2.3...v0.2.4
 [0.1.1]: https://github.com/ban12-project/tailwindcss-safe-area/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/ban12-project/tailwindcss-safe-area/releases/tag/v0.1.0

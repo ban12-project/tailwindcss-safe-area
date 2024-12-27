@@ -7,7 +7,7 @@ A plugin for Tailwind CSS v3.2+ that provides utilities for safe area.
 Install the plugin from npm:
 
 ```sh
-npm install @ban12/tailwindcss-safe-area
+npm install -D @ban12/tailwindcss-safe-area
 ```
 
 Then add the plugin to your `tailwind.config.js` file:

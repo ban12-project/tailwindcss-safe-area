@@ -14,7 +14,6 @@ it('safe area', () => {
           <div class="mx-safe"></div>
           <div class="my-safe"></div>
           <div class="mt-safe mr-safe mb-safe ml-safe"></div>
-          <div class="ms-safe me-safe"></div>
           <div class="ms-safe-top ms-safe-right ms-safe-bottom ms-safe-left"></div>
           <div class="me-safe-top me-safe-right me-safe-bottom me-safe-left"></div>
 
@@ -28,12 +27,14 @@ it('safe area', () => {
           <div class="scroll-m-safe"></div>
           <div class="scroll-mx-safe"></div>
           <div class="scroll-my-safe"></div>
-          <div class="scroll-mt-safe scroll-mr-safe scroll-mb-safe scroll-ml-safe></div>
+          <div class="scroll-ms-safe scroll-me-safe"></div>
+          <div class="scroll-mt-safe scroll-mr-safe scroll-mb-safe scroll-ml-safe"></div>
 
           <div class="scroll-p-safe"></div>
           <div class="scroll-px-safe"></div>
           <div class="scroll-py-safe"></div>
-          <div class="scroll-pt-safe scroll-pr-safe scroll-pb-safe scroll-pl-safe></div>
+          <div class="scroll-ps-safe scroll-pe-safe"></div>
+          <div class="scroll-pt-safe scroll-pr-safe scroll-pb-safe scroll-pl-safe"></div>
         `,
       },
     ],
@@ -64,10 +65,8 @@ it('safe area', () => {
       }
 
       .m-safe {
-        margin-top: env(safe-area-inset-top);
-        margin-right: env(safe-area-inset-right);
-        margin-bottom: env(safe-area-inset-bottom);
-        margin-left: env(safe-area-inset-left);
+        margin: env(safe-area-inset-top) env(safe-area-inset-right)
+          env(safe-area-inset-bottom) env(safe-area-inset-left);
       }
 
       .mx-safe {
@@ -129,10 +128,8 @@ it('safe area', () => {
       }
 
       .p-safe {
-        padding-top: env(safe-area-inset-top);
-        padding-right: env(safe-area-inset-right);
-        padding-bottom: env(safe-area-inset-bottom);
-        padding-left: env(safe-area-inset-left);
+        padding: env(safe-area-inset-top) env(safe-area-inset-right)
+          env(safe-area-inset-bottom) env(safe-area-inset-left);
       }
 
       .px-safe {
@@ -194,10 +191,8 @@ it('safe area', () => {
       }
 
       .scroll-m-safe {
-        scroll-margin-top: env(safe-area-inset-top);
-        scroll-margin-right: env(safe-area-inset-right);
-        scroll-margin-bottom: env(safe-area-inset-bottom);
-        scroll-margin-left: env(safe-area-inset-left);
+        scroll-margin: env(safe-area-inset-top) env(safe-area-inset-right)
+          env(safe-area-inset-bottom) env(safe-area-inset-left);
       }
       .scroll-mx-safe {
         scroll-margin-left: env(safe-area-inset-left);
@@ -206,6 +201,12 @@ it('safe area', () => {
       .scroll-my-safe {
         scroll-margin-top: env(safe-area-inset-top);
         scroll-margin-bottom: env(safe-area-inset-bottom);
+      }
+      .scroll-ms-safe {
+        scroll-margin-inline-start: env(safe-area-inset-left);
+      }
+      .scroll-me-safe {
+        scroll-margin-inline-end: env(safe-area-inset-right);
       }
       .scroll-mt-safe {
         scroll-margin-top: env(safe-area-inset-top);
@@ -221,10 +222,8 @@ it('safe area', () => {
       }
 
       .scroll-p-safe {
-        scroll-padding-top: env(safe-area-inset-top);
-        scroll-padding-right: env(safe-area-inset-right);
-        scroll-padding-bottom: env(safe-area-inset-bottom);
-        scroll-padding-left: env(safe-area-inset-left);
+        scroll-padding: env(safe-area-inset-top) env(safe-area-inset-right)
+          env(safe-area-inset-bottom) env(safe-area-inset-left);
       }
       .scroll-px-safe {
         scroll-padding-left: env(safe-area-inset-left);
@@ -233,6 +232,12 @@ it('safe area', () => {
       .scroll-py-safe {
         scroll-padding-top: env(safe-area-inset-top);
         scroll-padding-bottom: env(safe-area-inset-bottom);
+      }
+      .scroll-ps-safe {
+        scroll-padding-inline-start: env(safe-area-inset-left);
+      }
+      .scroll-pe-safe {
+        scroll-padding-inline-end: env(safe-area-inset-right);
       }
       .scroll-pt-safe {
         scroll-padding-top: env(safe-area-inset-top);
@@ -257,6 +262,7 @@ it('should be possible to use variants', () => {
         raw: html`
           <div class="ms-safe-top-max-1 pe-safe-top-max-1"></div>
           <div class="top-safe-max-1"></div>
+          <div class="-top-safe-max-1"></div>
           <div class="top-safe-max-[1px]"></div>
           <div class="top-safe-max-[var(--css-variable)]"></div>
           <div class="supports-[padding:max(0px)]:top-safe-max-1"></div>
@@ -277,6 +283,10 @@ it('should be possible to use variants', () => {
   return run(input, config).then((result) => {
     // TODO: The class order here may be different, which may be related to tailwincss.
     expect(result.css).toMatchFormattedCss(css`
+      .-top-safe-max-1 {
+        top: max(-0.25rem, env(safe-area-inset-top));
+      }
+
       .ms-safe-top-max-1 {
         margin-inline-start: max(0.25rem, env(safe-area-inset-top));
       }
@@ -286,17 +296,15 @@ it('should be possible to use variants', () => {
       }
 
       .scroll-m-safe-max-1 {
-        scroll-margin-top: max(0.25rem, env(safe-area-inset-top));
-        scroll-margin-right: max(0.25rem, env(safe-area-inset-right));
-        scroll-margin-bottom: max(0.25rem, env(safe-area-inset-bottom));
-        scroll-margin-left: max(0.25rem, env(safe-area-inset-left));
+        scroll-margin: max(0.25rem, env(safe-area-inset-top))
+          max(0.25rem, env(safe-area-inset-right)) max(0.25rem, env(safe-area-inset-bottom))
+          max(0.25rem, env(safe-area-inset-left));
       }
 
       .scroll-p-safe-max-1 {
-        scroll-padding-top: max(0.25rem, env(safe-area-inset-top));
-        scroll-padding-right: max(0.25rem, env(safe-area-inset-right));
-        scroll-padding-bottom: max(0.25rem, env(safe-area-inset-bottom));
-        scroll-padding-left: max(0.25rem, env(safe-area-inset-left));
+        scroll-padding: max(0.25rem, env(safe-area-inset-top))
+          max(0.25rem, env(safe-area-inset-right)) max(0.25rem, env(safe-area-inset-bottom))
+          max(0.25rem, env(safe-area-inset-left));
       }
 
       .top-safe-max-1 {

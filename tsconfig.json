@@ -2,13 +2,13 @@
   "compilerOptions": {
     "target": "es2019",
     "lib": ["ES2019"],
-    "module": "CommonJS",
+    "module": "NodeNext",
     "declaration": true,
     "declarationMap": false,
     "declarationDir": "dist",
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
     "stripInternal": true,
     "outDir": "dist",
     "allowJs": true
@@ -21,4 +21,3 @@
     "./tests/index.test.ts"
   ]
 }
-

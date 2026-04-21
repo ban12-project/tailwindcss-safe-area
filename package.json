@@ -1,9 +1,10 @@
 {
   "name": "@ban12/tailwindcss-safe-area",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "type": "module",
   "license": "MIT",
   "repository": "https://github.com/ban12-project/tailwindcss-safe-area",
+  "packageManager": "pnpm@10.33.0",
   "publishConfig": {
     "access": "public"
   },
@@ -18,14 +19,17 @@
     }
   },
   "scripts": {
-    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "test": "pnpm test:matrix",
+    "test:matrix": "pnpm test:v3 && pnpm test:v4",
+    "test:v3": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --no-watchman --config ./jest.v3.config.cjs",
+    "test:v4": "pnpm build && node --experimental-vm-modules ./node_modules/jest/bin/jest.js --no-watchman --config ./jest.v4.config.cjs",
     "swcify:cjs": "swc src -d dist --strip-leading-paths",
     "swcify:esm": "swc src -d dist --strip-leading-paths -C module.type=es6 --out-file-extension mjs",
-    "swcify": "npm run swcify:cjs && npm run swcify:esm",
-    "build": "npm run swcify",
-    "dev": "npm run swcify -- --watch",
+    "swcify": "pnpm swcify:cjs && pnpm swcify:esm",
+    "build": "pnpm swcify",
+    "dev": "pnpm swcify -- --watch",
     "postbuild": "tsc --emitDeclarationOnly",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "pnpm build",
     "release-channel": "node ./scripts/release-channel.js",
     "release-notes": "node ./scripts/release-notes.js"
   },
@@ -35,25 +39,11 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "<rootDir>/jest/custom-matchers.ts"
-    ],
-    "transform": {
-      "^.+\\.(t|j)sx?$": "@swc/jest"
-    },
-    "moduleNameMapper": {
-      "^~/(.*)": "<rootDir>/$1"
-    },
-    "extensionsToTreatAsEsm": [
-      ".ts"
-    ]
-  },
   "files": [
     "dist"
   ],
   "peerDependencies": {
-    "tailwindcss": ">=3.2.0"
+    "tailwindcss": ">=3.2.0 <5"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
@@ -66,7 +56,9 @@
     "jest-diff": "^29.7.0",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
-    "tailwindcss": "3.4.3",
-    "typescript": "^4.9.5"
+    "tailwindcss": "^4.0.0",
+    "tailwindcss-v3": "npm:tailwindcss@^3.4.0",
+    "tailwindcss-v4": "npm:tailwindcss@^4.0.0",
+    "typescript": "^5.4.3"
   }
 }

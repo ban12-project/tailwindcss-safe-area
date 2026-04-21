@@ -1,217 +1,157 @@
 import plugin from 'tailwindcss/plugin'
-import { CSSRuleObject } from 'tailwindcss/types/config'
 
-export default plugin(function safeArea({ addUtilities, matchUtilities, theme }) {
-  const baseUtilities = {
-    '.top-safe': {
-      top: 'env(safe-area-inset-top)',
-    },
-    '.right-safe': {
-      right: 'env(safe-area-inset-right)',
-    },
-    '.bottom-safe': {
-      bottom: 'env(safe-area-inset-bottom)',
-    },
-    '.left-safe': {
-      left: 'env(safe-area-inset-left)',
-    },
-    '.m-safe': {
-      marginTop: 'env(safe-area-inset-top)',
-      marginRight: 'env(safe-area-inset-right)',
-      marginBottom: 'env(safe-area-inset-bottom)',
-      marginLeft: 'env(safe-area-inset-left)',
-    },
-    '.mx-safe': {
-      marginRight: 'env(safe-area-inset-right)',
-      marginLeft: 'env(safe-area-inset-left)',
-    },
-    '.my-safe': {
-      marginTop: 'env(safe-area-inset-top)',
-      marginBottom: 'env(safe-area-inset-bottom)',
-    },
-    '.mt-safe': {
-      marginTop: 'env(safe-area-inset-top)',
-    },
-    '.mr-safe': {
-      marginRight: 'env(safe-area-inset-right)',
-    },
-    '.mb-safe': {
-      marginBottom: 'env(safe-area-inset-bottom)',
-    },
-    '.ml-safe': {
-      marginLeft: 'env(safe-area-inset-left)',
-    },
-    '.ms-safe-top': {
-      marginInlineStart: 'env(safe-area-inset-top)',
-    },
-    '.ms-safe-right': {
-      marginInlineStart: 'env(safe-area-inset-right)',
-    },
-    '.ms-safe-bottom': {
-      marginInlineStart: 'env(safe-area-inset-bottom)',
-    },
-    '.ms-safe-left': {
-      marginInlineStart: 'env(safe-area-inset-left)',
-    },
-    '.me-safe-top': {
-      marginInlineEnd: 'env(safe-area-inset-top)',
-    },
-    '.me-safe-right': {
-      marginInlineEnd: 'env(safe-area-inset-right)',
-    },
-    '.me-safe-bottom': {
-      marginInlineEnd: 'env(safe-area-inset-bottom)',
-    },
-    '.me-safe-left': {
-      marginInlineEnd: 'env(safe-area-inset-left)',
-    },
-    '.p-safe': {
-      paddingTop: 'env(safe-area-inset-top)',
-      paddingRight: 'env(safe-area-inset-right)',
-      paddingBottom: 'env(safe-area-inset-bottom)',
-      paddingLeft: 'env(safe-area-inset-left)',
-    },
-    '.px-safe': {
-      paddingRight: 'env(safe-area-inset-right)',
-      paddingLeft: 'env(safe-area-inset-left)',
-    },
-    '.py-safe': {
-      paddingTop: 'env(safe-area-inset-top)',
-      paddingBottom: 'env(safe-area-inset-bottom)',
-    },
-    '.pt-safe': {
-      paddingTop: 'env(safe-area-inset-top)',
-    },
-    '.pr-safe': {
-      paddingRight: 'env(safe-area-inset-right)',
-    },
-    '.pb-safe': {
-      paddingBottom: 'env(safe-area-inset-bottom)',
-    },
-    '.pl-safe': {
-      paddingLeft: 'env(safe-area-inset-left)',
-    },
-    '.ps-safe-top': {
-      paddingInlineStart: 'env(safe-area-inset-top)',
-    },
-    '.ps-safe-right': {
-      paddingInlineStart: 'env(safe-area-inset-right)',
-    },
-    '.ps-safe-bottom': {
-      paddingInlineStart: 'env(safe-area-inset-bottom)',
-    },
-    '.ps-safe-left': {
-      paddingInlineStart: 'env(safe-area-inset-left)',
-    },
-    '.pe-safe-top': {
-      paddingInlineEnd: 'env(safe-area-inset-top)',
-    },
-    '.pe-safe-right': {
-      paddingInlineEnd: 'env(safe-area-inset-right)',
-    },
-    '.pe-safe-bottom': {
-      paddingInlineEnd: 'env(safe-area-inset-bottom)',
-    },
-    '.pe-safe-left': {
-      paddingInlineEnd: 'env(safe-area-inset-left)',
-    },
-    /* Scroll Margin */
-    '.scroll-m-safe': {
-      scrollMarginTop: 'env(safe-area-inset-top)',
-      scrollMarginRight: 'env(safe-area-inset-right)',
-      scrollMarginBottom: 'env(safe-area-inset-bottom)',
-      scrollMarginLeft: 'env(safe-area-inset-left)',
-    },
-    '.scroll-mx-safe': {
-      scrollMarginLeft: 'env(safe-area-inset-left)',
-      scrollMarginRight: 'env(safe-area-inset-right)',
-    },
-    '.scroll-my-safe': {
-      scrollMarginTop: 'env(safe-area-inset-top)',
-      scrollMarginBottom: 'env(safe-area-inset-bottom)',
-    },
-    '.scroll-ms-safe': {
-      scrollMarginInlineStart: 'env(safe-area-inset-left)',
-    },
-    '.scroll-me-safe': {
-      scrollMarginInlineEnd: 'env(safe-area-inset-right)',
-    },
-    '.scroll-mt-safe': {
-      scrollMarginTop: 'env(safe-area-inset-top)',
-    },
-    '.scroll-mr-safe': {
-      scrollMarginRight: 'env(safe-area-inset-right)',
-    },
-    '.scroll-mb-safe': {
-      scrollMarginBottom: 'env(safe-area-inset-bottom)',
-    },
-    '.scroll-ml-safe': {
-      scrollMarginLeft: 'env(safe-area-inset-left)',
-    },
-    /* Scroll Padding */
-    '.scroll-p-safe': {
-      scrollPaddingTop: 'env(safe-area-inset-top)',
-      scrollPaddingRight: 'env(safe-area-inset-right)',
-      scrollPaddingBottom: 'env(safe-area-inset-bottom)',
-      scrollPaddingLeft: 'env(safe-area-inset-left)',
-    },
-    '.scroll-px-safe': {
-      scrollPaddingLeft: 'env(safe-area-inset-left)',
-      scrollPaddingRight: 'env(safe-area-inset-right)',
-    },
-    '.scroll-py-safe': {
-      scrollPaddingTop: 'env(safe-area-inset-top)',
-      scrollPaddingBottom: 'env(safe-area-inset-bottom)',
-    },
-    '.scroll-ps-safe': {
-      scrollPaddingInlineStart: 'env(safe-area-inset-left)',
-    },
-    '.scroll-pe-safe': {
-      scrollPaddingInlineEnd: 'env(safe-area-inset-right)',
-    },
-    '.scroll-pt-safe': {
-      scrollPaddingTop: 'env(safe-area-inset-top)',
-    },
-    '.scroll-pr-safe': {
-      scrollPaddingRight: 'env(safe-area-inset-right)',
-    },
-    '.scroll-pb-safe': {
-      scrollPaddingBottom: 'env(safe-area-inset-bottom)',
-    },
-    '.scroll-pl-safe': {
-      scrollPaddingLeft: 'env(safe-area-inset-left)',
-    },
-  }
-  addUtilities(baseUtilities)
+type SafeSide = 'top' | 'right' | 'bottom' | 'left'
+type Declaration = Record<string, string>
+type UtilityGenerator = (value: string) => Declaration
 
-  const genVariants = (
-    selectorHandler: (selector: string) => string,
-    propertyValueHandler: (value: string, propertyValue: string) => string,
-    base = baseUtilities
-  ) => {
-    const genDeclaration = (declaration: Record<string, string>) => (value: string) =>
-      Object.entries(declaration).reduce<CSSRuleObject>((properties, [property, propertyValue]) => {
-        properties[property] = propertyValueHandler(value, propertyValue)
-        return properties
-      }, {})
+type PluginApi = {
+  addUtilities(utilities: Record<string, Declaration>): void
+  matchUtilities(
+    utilities: Record<string, UtilityGenerator>,
+    options: {
+      values: Record<string, string>
+      supportsNegativeValues: boolean
+    }
+  ): void
+  theme(path: string): Record<string, string>
+}
 
-    return Object.entries(base).reduce<Record<string, (value: string) => CSSRuleObject>>(
-      (values, [selector, declaration]) => {
-        values[selectorHandler(selector.slice(1))] = genDeclaration(declaration)
-        return values
-      },
-      {}
-    )
-  }
+type DeclarationSpec = {
+  property: string
+  sides: SafeSide[]
+}
+
+type UtilitySpec = {
+  className: string
+  declarations: DeclarationSpec[]
+}
+
+const safeArea = (side: SafeSide) => `env(safe-area-inset-${side})`
+
+const joinSafeAreas = (sides: SafeSide[], valueHandler = (value: string) => value) =>
+  sides.map((side) => valueHandler(safeArea(side))).join(' ')
+
+const utility = (
+  className: string,
+  declarations: Array<[property: string, sides: SafeSide[]]>
+): UtilitySpec => ({
+  className,
+  declarations: declarations.map(([property, sides]) => ({ property, sides })),
+})
+
+const allSides: SafeSide[] = ['top', 'right', 'bottom', 'left']
+
+const utilities: UtilitySpec[] = [
+  utility('top-safe', [['top', ['top']]]),
+  utility('right-safe', [['right', ['right']]]),
+  utility('bottom-safe', [['bottom', ['bottom']]]),
+  utility('left-safe', [['left', ['left']]]),
+
+  utility('m-safe', [['margin', allSides]]),
+  utility('mx-safe', [
+    ['marginRight', ['right']],
+    ['marginLeft', ['left']],
+  ]),
+  utility('my-safe', [
+    ['marginTop', ['top']],
+    ['marginBottom', ['bottom']],
+  ]),
+  utility('mt-safe', [['marginTop', ['top']]]),
+  utility('mr-safe', [['marginRight', ['right']]]),
+  utility('mb-safe', [['marginBottom', ['bottom']]]),
+  utility('ml-safe', [['marginLeft', ['left']]]),
+  utility('ms-safe-top', [['marginInlineStart', ['top']]]),
+  utility('ms-safe-right', [['marginInlineStart', ['right']]]),
+  utility('ms-safe-bottom', [['marginInlineStart', ['bottom']]]),
+  utility('ms-safe-left', [['marginInlineStart', ['left']]]),
+  utility('me-safe-top', [['marginInlineEnd', ['top']]]),
+  utility('me-safe-right', [['marginInlineEnd', ['right']]]),
+  utility('me-safe-bottom', [['marginInlineEnd', ['bottom']]]),
+  utility('me-safe-left', [['marginInlineEnd', ['left']]]),
+
+  utility('p-safe', [['padding', allSides]]),
+  utility('px-safe', [
+    ['paddingRight', ['right']],
+    ['paddingLeft', ['left']],
+  ]),
+  utility('py-safe', [
+    ['paddingTop', ['top']],
+    ['paddingBottom', ['bottom']],
+  ]),
+  utility('pt-safe', [['paddingTop', ['top']]]),
+  utility('pr-safe', [['paddingRight', ['right']]]),
+  utility('pb-safe', [['paddingBottom', ['bottom']]]),
+  utility('pl-safe', [['paddingLeft', ['left']]]),
+  utility('ps-safe-top', [['paddingInlineStart', ['top']]]),
+  utility('ps-safe-right', [['paddingInlineStart', ['right']]]),
+  utility('ps-safe-bottom', [['paddingInlineStart', ['bottom']]]),
+  utility('ps-safe-left', [['paddingInlineStart', ['left']]]),
+  utility('pe-safe-top', [['paddingInlineEnd', ['top']]]),
+  utility('pe-safe-right', [['paddingInlineEnd', ['right']]]),
+  utility('pe-safe-bottom', [['paddingInlineEnd', ['bottom']]]),
+  utility('pe-safe-left', [['paddingInlineEnd', ['left']]]),
+
+  utility('scroll-m-safe', [['scrollMargin', allSides]]),
+  utility('scroll-mx-safe', [
+    ['scrollMarginLeft', ['left']],
+    ['scrollMarginRight', ['right']],
+  ]),
+  utility('scroll-my-safe', [
+    ['scrollMarginTop', ['top']],
+    ['scrollMarginBottom', ['bottom']],
+  ]),
+  utility('scroll-ms-safe', [['scrollMarginInlineStart', ['left']]]),
+  utility('scroll-me-safe', [['scrollMarginInlineEnd', ['right']]]),
+  utility('scroll-mt-safe', [['scrollMarginTop', ['top']]]),
+  utility('scroll-mr-safe', [['scrollMarginRight', ['right']]]),
+  utility('scroll-mb-safe', [['scrollMarginBottom', ['bottom']]]),
+  utility('scroll-ml-safe', [['scrollMarginLeft', ['left']]]),
+
+  utility('scroll-p-safe', [['scrollPadding', allSides]]),
+  utility('scroll-px-safe', [
+    ['scrollPaddingLeft', ['left']],
+    ['scrollPaddingRight', ['right']],
+  ]),
+  utility('scroll-py-safe', [
+    ['scrollPaddingTop', ['top']],
+    ['scrollPaddingBottom', ['bottom']],
+  ]),
+  utility('scroll-ps-safe', [['scrollPaddingInlineStart', ['left']]]),
+  utility('scroll-pe-safe', [['scrollPaddingInlineEnd', ['right']]]),
+  utility('scroll-pt-safe', [['scrollPaddingTop', ['top']]]),
+  utility('scroll-pr-safe', [['scrollPaddingRight', ['right']]]),
+  utility('scroll-pb-safe', [['scrollPaddingBottom', ['bottom']]]),
+  utility('scroll-pl-safe', [['scrollPaddingLeft', ['left']]]),
+]
+
+const toDeclaration = (
+  spec: UtilitySpec,
+  valueHandler?: (propertyValue: string) => string
+): Declaration =>
+  spec.declarations.reduce<Declaration>((declarations, { property, sides }) => {
+    declarations[property] = joinSafeAreas(sides, valueHandler)
+    return declarations
+  }, {})
+
+const safeAreaPlugin: any = plugin(function safeArea({ addUtilities, matchUtilities, theme }: PluginApi) {
+  addUtilities(
+    utilities.reduce<Record<string, Declaration>>((values, spec) => {
+      values[`.${spec.className}`] = toDeclaration(spec)
+      return values
+    }, {})
+  )
 
   matchUtilities(
-    genVariants(
-      (selector) => `${selector}-max`,
-      (value, propertyValue) => `max(${value}, ${propertyValue})`
-    ),
+    utilities.reduce<Record<string, (value: string) => Declaration>>((values, spec) => {
+      values[`${spec.className}-max`] = (value) =>
+        toDeclaration(spec, (propertyValue) => `max(${value}, ${propertyValue})`)
+      return values
+    }, {}),
     {
       values: theme('spacing'),
       supportsNegativeValues: true,
     }
   )
 })
+
+export default safeAreaPlugin

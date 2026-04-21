@@ -14,37 +14,32 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [24]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: pnpm
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Use cached node_modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: nodeModules-${{ hashFiles('./package-lock.json') }}-${{ matrix.node-version }}
-
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: npm run build
+        run: pnpm build
 
       - name: Test
-        run: npm test
+        run: pnpm test
 
       - name: Calculate environment variables
         run: |
-          echo "RELEASE_CHANNEL=$(npm run release-channel --silent)" >> $GITHUB_ENV
+          echo "RELEASE_CHANNEL=$(pnpm --silent release-channel)" >> $GITHUB_ENV
 
       - name: Publish
-        run: npm publish --provenance --tag ${{ env.RELEASE_CHANNEL }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm publish --access public --tag ${{ env.RELEASE_CHANNEL }} --no-git-checks

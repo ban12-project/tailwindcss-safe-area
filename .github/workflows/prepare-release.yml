@@ -21,31 +21,28 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [24]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: pnpm
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Use cached node_modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: nodeModules-${{ hashFiles('./package-lock.json') }}-${{ matrix.node-version }}
-
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: npm run build
+        run: pnpm build
 
       - name: Test
-        run: npm test
+        run: pnpm test
 
       - name: Resolve version
         id: vars
@@ -54,13 +51,13 @@ jobs:
 
       - name: Get release notes
         run: |
-          RELEASE_NOTES=$(npm run release-notes --silent)
+          RELEASE_NOTES=$(pnpm --silent release-notes)
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           echo "$RELEASE_NOTES" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           draft: true
           tag_name: ${{ env.TAG_NAME }}
